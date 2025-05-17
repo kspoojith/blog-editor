@@ -6,6 +6,7 @@ import {
   HStack,
   Tag,
   Avatar,
+  Spinner,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -16,10 +17,22 @@ export default function BlogList() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    setLoading(true);
     axios.get('https://blog-editor-xvy1.onrender.com/api/blogs')
       .then(res => setBlogs(res.data))
-      .catch(err => console.error('Failed to fetch blogs:', err));
+      .catch(err => console.error('Failed to fetch blogs:', err))
+      .finally(() => setLoading(false));
   }, []);
+
+  if (loading) {
+    return (
+      <Box maxW="800px" mx="auto" mt="8" textAlign="center">
+        <Spinner size="xl" />
+        <Text mt={2}>Loading blogs...</Text>
+      </Box>
+    );
+  }
+
 
   return (
     <Box maxW="800px" mx="auto" mt="8">
