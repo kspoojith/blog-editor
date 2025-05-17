@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function BlogList() {
   const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
